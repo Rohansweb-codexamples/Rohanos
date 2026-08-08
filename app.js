@@ -136,13 +136,18 @@ function downloadBlob(blob, filename) {
 }
 
 async function publishApp() {
-  const payload = studioPayload();
-  const response = await fetch('/api/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-  if (!response.ok) {
-    alert('Start the RohanOS server with npm start before publishing.');
-    return;
+  const payload = { ...studioPayload(), id: Date.now().toString(36), createdAt: new Date().toISOString() };
+  try {
+    const response = await fetch('/api/publish', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (response.ok) {
+      alert('Published to the RohanOS server App Store.');
+      return;
+    }
+  } catch (error) {
+    console.info('Server publishing unavailable; using browser-only GitHub Pages mode.', error);
   }
-  alert('Published to the local RohanOS App Store.');
+  store.set('publishedApps', [payload, ...store.get('publishedApps', [])]);
+  alert('Published in browser-only mode. On GitHub Pages this app is saved to this browser.');
 }
 
 async function loadStore() {
@@ -150,8 +155,12 @@ async function loadStore() {
   if (!target) return;
   const localApps = store.get('publishedApps', []);
   let serverApps = [];
-  const response = await fetch('/api/apps');
-  if (response.ok) serverApps = await response.json();
+  try {
+    const response = await fetch('/api/apps');
+    if (response.ok) serverApps = await response.json();
+  } catch (error) {
+    console.info('Server app store unavailable; showing browser-only apps.', error);
+  }
   const apps = [...serverApps, ...localApps];
   target.innerHTML = apps.map((app) => `<article class="app-card"><h3>${app.name}</h3><p class="muted">${app.description}</p><small>By ${app.author}</small></article>`).join('') || '<p class="muted">No published apps yet. Use Studio to publish one.</p>';
 }
