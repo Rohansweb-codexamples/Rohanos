@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>RohanOS Mobile</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:linear-gradient(135deg,#ff9800,#ff5722,#ff4081);height:100vh;color:#fff;overflow:hidden}
+#boot,#lock,#home{position:absolute;inset:0}.center{display:flex;align-items:center;justify-content:center;flex-direction:column;height:100%}
+#home{display:none}.status{padding:10px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:15px}
+.app{background:rgba(255,255,255,.15);padding:18px;border-radius:20px;text-decoration:none;color:#fff;text-align:center}
+.dock{position:absolute;bottom:10px;left:10px;right:10px;background:rgba(255,255,255,.15);padding:10px;border-radius:25px;display:flex;justify-content:space-around}
+.widget{margin:15px;background:rgba(255,255,255,.15);padding:15px;border-radius:20px}
+</style></head><body>
+<div id='boot' class='center'><h1>RohanOS Mobile</h1><p>Booting...</p></div>
+<div id='lock' class='center' style='display:none'><h1 id='clock'></h1><p>Tap to Unlock</p></div>
+<div id='home'>
+<div class='status'>RohanOS</div>
+<div class='widget'><h2 id='clock2'></h2></div>
+<div class='grid'>
+<a class='app' href='settings.html'>Settings</a>
+<a class='app' href='notes.html'>Notes</a>
+<a class='app' href='calculator.html'>Calculator</a>
+<a class='app' href='browser.html'>Browser</a>
+<a class='app' href='music.html'>Music</a>
+<a class='app' href='gallery.html'>Gallery</a>
+<a class='app' href='calendar.html'>Calendar</a>
+<a class='app' href='files.html'>Files</a>
+</div>
+<div class='dock'><span>Home</span><span>Apps</span><span>Control</span></div>
+</div>
+<script>
+setTimeout(()=>{boot.style.display='none';lock.style.display='block'},2000);
+setInterval(()=>{let t=new Date().toLocaleTimeString();clock.innerText=t;clock2.innerText=t},1000);
+lock.onclick=()=>{lock.style.display='none';home.style.display='block';}
+</script></body></html>
