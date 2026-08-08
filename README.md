@@ -1,21 +1,29 @@
-# RohanOS
+# RohanOS Desktop
 
-RohanOS is a polished, browser-based mobile OS prototype built with plain HTML, CSS, and JavaScript.
+RohanOS is a desktop-style browser operating system prototype built with plain HTML, CSS, JavaScript, and an optional Node.js publishing server.
 
 ## Features
 
-- Responsive phone-style home screen with app launcher and dock
-- Shared glassmorphism design system
-- Live clock/date widgets
-- Notes app with localStorage persistence
-- Calculator, browser launcher, music, gallery, calendar, files, and settings pages
+- Desktop workspace with menu bar, window chrome, taskbar, widgets, and launch icons
+- First-run setup plus a generated 1000-setting control center
+- Whole Notepad app with local saves and `.txt` export
+- HTML Studio for creating browser-only HTML files, live previewing them, downloading them, and publishing them
+- Local App Store page backed by the optional publishing server
+- Existing utility apps for calculator, browser launcher, music, gallery, calendar, and files
 
-## Run locally
+## Run the desktop
 
-Open `index.html` directly in a browser, or serve the directory with any static server:
+Open `index.html` directly in a browser for local-only mode.
+
+## Run with publishing server
 
 ```bash
-python3 -m http.server 8000
+npm start
 ```
 
-Then visit `http://localhost:8000`.
+Then visit `http://localhost:8000`. Publishing from HTML Studio writes app listings to `data/app-store.json` through the local server API.
+
+## Server API
+
+- `GET /api/apps` lists published apps.
+- `POST /api/publish` accepts `{ "name", "author", "description", "html" }` and stores an HTML-only app listing.
