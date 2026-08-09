@@ -179,10 +179,10 @@ function loadSettings() {
 document.addEventListener('DOMContentLoaded', initShell);
 
 const readyMadeApps = [
-  { id: 'paint-lite', name: 'Paint Lite', icon: '🎨', description: 'Sketch colorful ideas on a simple canvas.', html: '<!doctype html><html><body style="font-family:system-ui;background:#111;color:white"><h1>Paint Lite</h1><canvas width="420" height="260" style="background:white;border-radius:16px"></canvas><script>const c=document.querySelector("canvas"),x=c.getContext("2d");let d=false;c.onpointerdown=e=>{d=true;x.moveTo(e.offsetX,e.offsetY)};c.onpointerup=()=>d=false;c.onpointermove=e=>{if(d){x.lineTo(e.offsetX,e.offsetY);x.stroke()}}<\/script></body></html>' },
-  { id: 'tasks-pro', name: 'Tasks Pro', icon: '✅', description: 'A tiny checklist for daily focus.', html: '<!doctype html><html><body style="font-family:system-ui;padding:24px"><h1>Tasks Pro</h1><input id="i"><button onclick="l.innerHTML+=`<li>${i.value}</li>`;i.value=``">Add</button><ul id="l"></ul></body></html>' },
-  { id: 'weather-card', name: 'Weather Card', icon: '☀️', description: 'A beautiful offline weather mockup.', html: '<!doctype html><html><body style="font-family:system-ui;background:linear-gradient(135deg,#38bdf8,#6366f1);color:white;padding:32px"><h1>24° Sunny</h1><p>Perfect day to build with RohanOS.</p></body></html>' },
-  { id: 'markdown-pad', name: 'Markdown Pad', icon: '📘', description: 'Write markdown-style notes in a clean editor.', html: '<!doctype html><html><body style="font-family:system-ui;margin:0;padding:24px"><h1>Markdown Pad</h1><textarea style="width:100%;height:280px"># Hello RohanOS</textarea></body></html>' }
+  { id: 'paint-lite', name: 'Paint Lite', icon: 'PT', description: 'Sketch colorful ideas on a simple canvas.', html: '<!doctype html><html><body style="font-family:system-ui;background:#111;color:white"><h1>Paint Lite</h1><canvas width="420" height="260" style="background:white;border-radius:16px"></canvas><script>const c=document.querySelector("canvas"),x=c.getContext("2d");let d=false;c.onpointerdown=e=>{d=true;x.moveTo(e.offsetX,e.offsetY)};c.onpointerup=()=>d=false;c.onpointermove=e=>{if(d){x.lineTo(e.offsetX,e.offsetY);x.stroke()}}<\/script></body></html>' },
+  { id: 'tasks-pro', name: 'Tasks Pro', icon: 'TS', description: 'A tiny checklist for daily focus.', html: '<!doctype html><html><body style="font-family:system-ui;padding:24px"><h1>Tasks Pro</h1><input id="i"><button onclick="l.innerHTML+=`<li>${i.value}</li>`;i.value=``">Add</button><ul id="l"></ul></body></html>' },
+  { id: 'weather-card', name: 'Weather Card', icon: 'WX', description: 'A beautiful offline weather mockup.', html: '<!doctype html><html><body style="font-family:system-ui;background:linear-gradient(135deg,#38bdf8,#6366f1);color:white;padding:32px"><h1>24° Sunny</h1><p>Perfect day to build with RohanOS.</p></body></html>' },
+  { id: 'markdown-pad', name: 'Markdown Pad', icon: 'MD', description: 'Write markdown-style notes in a clean editor.', html: '<!doctype html><html><body style="font-family:system-ui;margin:0;padding:24px"><h1>Markdown Pad</h1><textarea style="width:100%;height:280px"># Hello RohanOS</textarea></body></html>' }
 ];
 
 function installedApps() {
@@ -208,22 +208,33 @@ function uninstallApp(id) {
 function openInstalledApp(id) {
   const app = installedApps().find((item) => item.id === id);
   if (!app) return;
+  const desktop = $('#storeDesktop');
   const viewer = $('#installedPreview');
+  if (desktop) {
+    desktop.innerHTML = `<section class="window app-window"><div class="window-title"><span class="dot red"></span><span class="dot green"></span><span class="dot yellow"></span><strong>${app.name}</strong><button class="button secondary" onclick="closeAppWindow()">Close</button></div><iframe class="preview" title="${app.name}"></iframe></section>`;
+    desktop.querySelector('iframe').srcdoc = app.html;
+    return;
+  }
   if (viewer) viewer.srcdoc = app.html;
+}
+
+function closeAppWindow() {
+  const desktop = $('#storeDesktop');
+  if (desktop) desktop.innerHTML = '<p class="muted">Select an installed app to open it in a RohanOS window.</p>';
 }
 
 function renderAppStore() {
   const target = $('#readyApps');
   if (!target) return;
   const installed = new Set(installedApps().map((app) => app.id));
-  target.innerHTML = readyMadeApps.map((app) => `<article class="app-card"><h3>${app.icon} ${app.name}</h3><p class="muted">${app.description}</p><button class="button" onclick="installApp('${app.id}')">${installed.has(app.id) ? 'Reinstall' : 'Install'}</button></article>`).join('');
+  target.innerHTML = readyMadeApps.map((app) => `<article class="app-card"><h3><span class="app-mark">${app.icon}</span> ${app.name}</h3><p class="muted">${app.description}</p><button class="button" onclick="installApp('${app.id}')">${installed.has(app.id) ? 'Reinstall' : 'Install'}</button></article>`).join('');
 }
 
 function renderInstalledApps() {
   const target = $('#installedApps');
   if (!target) return;
   const apps = installedApps();
-  target.innerHTML = apps.map((app) => `<article class="app-card"><h3>${app.icon} ${app.name}</h3><p class="muted">${app.description}</p><p class="row"><button class="button" onclick="openInstalledApp('${app.id}')">Open</button><button class="button secondary" onclick="uninstallApp('${app.id}')">Remove</button></p></article>`).join('') || '<p class="muted">No apps installed yet. Install one from the Ready Made Apps section.</p>';
+  target.innerHTML = apps.map((app) => `<article class="app-card"><h3><span class="app-mark">${app.icon}</span> ${app.name}</h3><p class="muted">${app.description}</p><p class="row"><button class="button" onclick="openInstalledApp('${app.id}')">Open</button><button class="button secondary" onclick="uninstallApp('${app.id}')">Remove</button></p></article>`).join('') || '<p class="muted">No apps installed yet. Install one from the Ready Made Apps section.</p>';
 }
 
 const fileReaders = {
@@ -348,19 +359,19 @@ function renderAppBucket() {
   const target = $('#appBucket');
   if (!target) return;
   const systemApps = [
-    ['🧰', 'HTML Studio', 'studio.html', 'Build and publish browser apps'],
-    ['🛒', 'App Store', 'appstore.html', 'Install ready made apps'],
-    ['📁', 'Files', 'files.html', 'Open HTML, images, PDFs, and text'],
-    ['⚙️', 'Settings', 'settings.html', 'Customize the desktop'],
-    ['📝', 'Notepad', 'notes.html', 'Write and export notes'],
-    ['🧮', 'Calculator', 'calculator.html', 'Calculate quickly'],
-    ['🌐', 'Browser', 'browser.html', 'Search the web'],
-    ['🎧', 'Music', 'music.html', 'Play focus tracks'],
-    ['🖼️', 'Gallery', 'gallery.html', 'Browse visuals'],
-    ['📅', 'Calendar', 'calendar.html', 'See your day']
+    ['ST', 'HTML Studio', 'studio.html', 'Build and publish browser apps'],
+    ['AS', 'App Store', 'appstore.html', 'Install ready made apps'],
+    ['FL', 'Files', 'files.html', 'Open HTML, images, PDFs, and text'],
+    ['SE', 'Settings', 'settings.html', 'Customize the desktop'],
+    ['NP', 'Notepad', 'notes.html', 'Write and export notes'],
+    ['CA', 'Calculator', 'calculator.html', 'Calculate quickly'],
+    ['WB', 'Browser', 'browser.html', 'Search the web'],
+    ['MU', 'Music', 'music.html', 'Play focus tracks'],
+    ['GA', 'Gallery', 'gallery.html', 'Browse visuals'],
+    ['CL', 'Calendar', 'calendar.html', 'See your day']
   ];
   const installed = installedApps().map((app) => [app.icon, app.name, 'appstore.html', app.description]);
-  target.innerHTML = [...systemApps, ...installed].map(([icon, name, href, desc]) => `<a class="app-card" href="${href}"><span class="emoji">${icon}</span><strong>${name}</strong><span class="muted">${desc}</span></a>`).join('');
+  target.innerHTML = [...systemApps, ...installed].map(([icon, name, href, desc]) => `<a class="app-card" href="${href}"><span class="app-mark">${icon}</span><strong>${name}</strong><span class="muted">${desc}</span></a>`).join('');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -421,3 +432,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (input) input.addEventListener('input', refreshSetupPreview);
   });
 });
+
+function resetSetup() {
+  const current = profile();
+  store.set('profile', { ...current, setupComplete: false });
+  alert('Setup reset. The wizard will show on the desktop again.');
+}

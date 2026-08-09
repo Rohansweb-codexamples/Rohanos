@@ -108,3 +108,8 @@ body[data-contrast="high"] { --text: #fff; --muted: #f8fafc; --line: rgba(255,25
 .progress { height: 10px; background: rgba(255,255,255,.14); border-radius: 999px; overflow: hidden; }
 .progress span { display: block; height: 100%; width: calc((var(--setup-step, 1) / 4) * 100%); background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
 @media (max-width: 760px) { .settings-shell { grid-template-columns: 1fr; } .settings-nav { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.app-mark { width: 42px; height: 42px; display: inline-grid; place-items: center; border-radius: 14px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; font-weight: 900; letter-spacing: .06em; }
+.app-window { min-height: 520px; margin-top: 14px; }
+.app-window .window-title { justify-content: start; }
+.app-window .window-title strong { flex: 1; }
+.store-desktop { min-height: 560px; }
