@@ -82,3 +82,29 @@ textarea { min-height: 240px; resize: vertical; font-family: "SFMono-Regular", C
 .swatch { min-width: 96px; border: 1px solid var(--line); border-radius: 16px; padding: 12px; color: white; background: var(--glass-light); }
 @media (max-width: 980px) { body { overflow: auto; } .workspace, .hero { grid-template-columns: 1fr; } .sidebar { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .menu-bar { position: static; margin-bottom: 12px; } .workspace { padding-top: 0; } .desktop { padding: 12px; } .sidebar { grid-template-columns: 1fr; } .taskbar { overflow-x: auto; justify-content: start; } }
+
+/* One-screen desktop/app ergonomics */
+body { overflow: auto; }
+.desktop { min-height: 100dvh; height: 100dvh; overflow: hidden; }
+.workspace { min-height: 0; overflow: hidden; }
+.window-body, .app-shell { scrollbar-width: thin; }
+.app-shell { height: 100dvh; overflow: auto; }
+body[data-font="system"] { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+body[data-font="serif"] { font-family: Georgia, "Times New Roman", serif; }
+body[data-font="mono"] { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+body[data-font="rounded"] { font-family: ui-rounded, "Arial Rounded MT Bold", Arial, sans-serif; }
+body[data-reduce-motion="true"] * { transition: none !important; animation: none !important; }
+body[data-contrast="high"] { --text: #fff; --muted: #f8fafc; --line: rgba(255,255,255,.48); --glass-light: rgba(255,255,255,.22); }
+.settings-shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; min-height: calc(100dvh - 130px); }
+.settings-nav { position: sticky; top: 0; align-self: start; display: grid; gap: 8px; }
+.settings-nav button { text-align: left; color: var(--text); background: rgba(255,255,255,.08); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.settings-nav button.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); font-weight: 800; }
+.settings-page { display: none; }
+.settings-page.active { display: grid; gap: 14px; }
+.setup-flow { display: grid; gap: 18px; }
+.setup-step { display: none; }
+.setup-step.active { display: block; }
+.setup-preview { min-height: 220px; border-radius: 22px; padding: 18px; background: linear-gradient(rgba(2,6,23,.15),rgba(2,6,23,.55)), var(--wallpaper-image) center/cover; border: 1px solid var(--line); }
+.progress { height: 10px; background: rgba(255,255,255,.14); border-radius: 999px; overflow: hidden; }
+.progress span { display: block; height: 100%; width: calc((var(--setup-step, 1) / 4) * 100%); background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+@media (max-width: 760px) { .settings-shell { grid-template-columns: 1fr; } .settings-nav { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); } }

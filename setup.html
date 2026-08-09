@@ -8,21 +8,15 @@
 </head>
 <body>
   <main class="app-shell">
-    <section class="app-layout">
+    <section class="app-layout setup-flow">
       <div class="topbar"><a class="back" href="index.html">← Desktop</a><h1>Setup Wizard</h1></div>
       <section class="panel">
-        <h2>Make RohanOS yours</h2>
-        <p class="muted">Choose the background, color, spacing, dock layout, and owner profile. These settings apply instantly and persist in this browser.</p>
-        <div class="card-grid">
-          <label>Owner name<input id="owner" class="input"></label>
-          <label>Theme<select id="theme"><option>Nebula Desktop</option><option>Swirl Studio</option><option>Midnight Pro</option></select></label>
-          <label>Primary accent<input id="accent" class="input" type="color"></label>
-          <label>Secondary accent<input id="accent2" class="input" type="color"></label>
-          <label>Wallpaper<select id="wallpaper"><option value="swirl">Color Swirl Image</option><option value="aurora">Aurora</option><option value="midnight">Midnight</option></select></label>
-          <label>Layout density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="large">Large</option></select></label>
-          <label>Dock alignment<select id="dock"><option value="center">Center</option><option value="start">Left</option><option value="end">Right</option></select></label>
-        </div>
-        <p class="row"><button class="button" onclick="completeSetupWizard()">Finish setup</button><button class="button secondary" onclick="saveFullSettings()">Apply without closing</button></p>
+        <p class="muted" id="setupStepLabel">Step 1 of 4</p><div class="progress"><span></span></div>
+        <div class="setup-step active" data-step="1"><h2>Account</h2><div class="card-grid"><label>Owner name<input id="owner" class="input"></label><label>Password<input id="password" class="input" type="password" placeholder="Optional local password label"></label></div></div>
+        <div class="setup-step" data-step="2"><h2>Look</h2><div class="card-grid"><label>Wallpaper<select id="wallpaper"><option value="swirl">Color Swirl Image</option><option value="aurora">Aurora</option><option value="midnight">Midnight</option></select></label><label>Theme<select id="theme"><option>Nebula Desktop</option><option>Swirl Studio</option><option>Midnight Pro</option></select></label><label>Primary accent<input id="accent" class="input" type="color"></label><label>Secondary accent<input id="accent2" class="input" type="color"></label></div></div>
+        <div class="setup-step" data-step="3"><h2>Layout and font</h2><div class="card-grid"><label>Font<select id="font"><option value="system">System</option><option value="rounded">Rounded</option><option value="serif">Serif</option><option value="mono">Mono</option></select></label><label>Layout density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="large">Large</option></select></label><label>Dock alignment<select id="dock"><option value="center">Center</option><option value="start">Left</option><option value="end">Right</option></select></label></div><p class="row"><label><input id="highContrast" type="checkbox"> High contrast</label><label><input id="reduceMotion" type="checkbox"> Reduce motion</label></p></div>
+        <div class="setup-step" data-step="4"><h2>Preview and finish</h2><div id="setupPreview" class="setup-preview"></div></div>
+        <p class="row"><button class="button secondary" onclick="previousSetupStep()">Back</button><button class="button secondary" onclick="nextSetupStep()">Next</button><button class="button" onclick="completeSetupWizard()">Finish once</button></p>
       </section>
     </section>
   </main>

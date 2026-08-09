@@ -270,6 +270,10 @@ const defaultProfile = {
   wallpaper: 'swirl',
   density: 'comfortable',
   dock: 'center',
+  font: 'system',
+  password: '',
+  highContrast: false,
+  reduceMotion: false,
   setupComplete: false
 };
 
@@ -283,6 +287,9 @@ function applySettings() {
   document.documentElement.style.setProperty('--accent-2', current.accent2);
   document.body.dataset.wallpaper = current.wallpaper;
   document.body.dataset.density = current.density;
+  document.body.dataset.font = current.font;
+  document.body.dataset.contrast = current.highContrast ? 'high' : 'normal';
+  document.body.dataset.reduceMotion = current.reduceMotion ? 'true' : 'false';
   const taskbar = $('.taskbar');
   if (taskbar) taskbar.style.justifyContent = current.dock;
   $$('[data-owner]').forEach((node) => { node.textContent = current.owner; });
@@ -299,6 +306,10 @@ function saveFullSettings() {
     wallpaper: $('#wallpaper')?.value || current.wallpaper,
     density: $('#density')?.value || current.density,
     dock: $('#dock')?.value || current.dock,
+    font: $('#font')?.value || current.font,
+    password: $('#password')?.value || current.password,
+    highContrast: $('#highContrast')?.checked ?? current.highContrast,
+    reduceMotion: $('#reduceMotion')?.checked ?? current.reduceMotion,
     setupComplete: true
   };
   store.set('profile', next);
@@ -315,7 +326,12 @@ function hydrateSettingsForm() {
   if ($('#wallpaper')) $('#wallpaper').value = current.wallpaper;
   if ($('#density')) $('#density').value = current.density;
   if ($('#dock')) $('#dock').value = current.dock;
+  if ($('#font')) $('#font').value = current.font;
+  if ($('#password')) $('#password').value = current.password;
+  if ($('#highContrast')) $('#highContrast').checked = current.highContrast;
+  if ($('#reduceMotion')) $('#reduceMotion').checked = current.reduceMotion;
 }
+
 
 function openSetupWizard(force = false) {
   const overlay = $('#setupWizard');
@@ -362,3 +378,46 @@ function loadSettings() {
   hydrateSettingsForm();
   applySettings();
 }
+
+let setupStep = 1;
+function showSetupStep(step) {
+  setupStep = Math.max(1, Math.min(4, step));
+  document.documentElement.style.setProperty('--setup-step', setupStep);
+  $$('.setup-step').forEach((node) => node.classList.toggle('active', Number(node.dataset.step) === setupStep));
+  const label = $('#setupStepLabel');
+  if (label) label.textContent = `Step ${setupStep} of 4`;
+  refreshSetupPreview();
+}
+
+function nextSetupStep() {
+  if (setupStep < 4) showSetupStep(setupStep + 1);
+}
+
+function previousSetupStep() {
+  if (setupStep > 1) showSetupStep(setupStep - 1);
+}
+
+function refreshSetupPreview() {
+  const preview = $('#setupPreview');
+  if (!preview) return;
+  const font = $('#font')?.value || profile().font;
+  const accent = $('#accent')?.value || profile().accent;
+  const accent2 = $('#accent2')?.value || profile().accent2;
+  const owner = $('#owner')?.value || profile().owner;
+  preview.style.fontFamily = font === 'serif' ? 'Georgia, serif' : font === 'mono' ? 'Consolas, monospace' : font === 'rounded' ? 'ui-rounded, Arial, sans-serif' : 'system-ui, sans-serif';
+  preview.innerHTML = `<div class="window-title"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><strong>${owner}'s RohanOS</strong></div><h2 style="margin-bottom:6px">Live setup preview</h2><p class="muted">Font, accent, wallpaper, spacing, and password setup are previewed before you finish.</p><button class="button" style="background:linear-gradient(135deg,${accent},${accent2})">Sample action</button>`;
+}
+
+function showSettingsPage(name) {
+  $$('.settings-page').forEach((page) => page.classList.toggle('active', page.id === `settings-${name}`));
+  $$('.settings-nav button').forEach((button) => button.classList.toggle('active', button.dataset.page === name));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  showSetupStep(1);
+  showSettingsPage('appearance');
+  ['owner', 'theme', 'accent', 'accent2', 'wallpaper', 'density', 'dock', 'font', 'password', 'highContrast', 'reduceMotion'].forEach((id) => {
+    const input = $(`#${id}`);
+    if (input) input.addEventListener('input', refreshSetupPreview);
+  });
+});
