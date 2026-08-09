@@ -1,31 +1,61 @@
-<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width,initial-scale=1'>
-<title>RohanOS Mobile</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial;background:linear-gradient(135deg,#ff9800,#ff5722,#ff4081);height:100vh;color:#fff;overflow:hidden}
-#boot,#lock,#home{position:absolute;inset:0}.center{display:flex;align-items:center;justify-content:center;flex-direction:column;height:100%}
-#home{display:none}.status{padding:10px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:15px}
-.app{background:rgba(255,255,255,.15);padding:18px;border-radius:20px;text-decoration:none;color:#fff;text-align:center}
-.dock{position:absolute;bottom:10px;left:10px;right:10px;background:rgba(255,255,255,.15);padding:10px;border-radius:25px;display:flex;justify-content:space-around}
-.widget{margin:15px;background:rgba(255,255,255,.15);padding:15px;border-radius:20px}
-</style></head><body>
-<div id='boot' class='center'><h1>RohanOS Mobile</h1><p>Booting...</p></div>
-<div id='lock' class='center' style='display:none'><h1 id='clock'></h1><p>Tap to Unlock</p></div>
-<div id='home'>
-<div class='status'>RohanOS</div>
-<div class='widget'><h2 id='clock2'></h2></div>
-<div class='grid'>
-<a class='app' href='settings.html'>Settings</a>
-<a class='app' href='notes.html'>Notes</a>
-<a class='app' href='calculator.html'>Calculator</a>
-<a class='app' href='browser.html'>Browser</a>
-<a class='app' href='music.html'>Music</a>
-<a class='app' href='gallery.html'>Gallery</a>
-<a class='app' href='calendar.html'>Calendar</a>
-<a class='app' href='files.html'>Files</a>
-</div>
-<div class='dock'><span>Home</span><span>Apps</span><span>Control</span></div>
-</div>
-<script>
-setTimeout(()=>{boot.style.display='none';lock.style.display='block'},2000);
-setInterval(()=>{let t=new Date().toLocaleTimeString();clock.innerText=t;clock2.innerText=t},1000);
-lock.onclick=()=>{lock.style.display='none';home.style.display='block';}
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RohanOS Desktop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="desktop">
+    <header class="menu-bar"><strong>◆ RohanOS Desktop</strong><span><span data-date></span> · <span data-clock></span></span></header>
+    <section class="workspace">
+      <nav class="icon-grid" aria-label="Desktop apps">
+        <a class="desktop-icon" href="studio.html"><span>ST</span><small>Studio</small></a>
+        <a class="desktop-icon" href="appstore.html"><span>AS</span><small>Store</small></a>
+        <a class="desktop-icon" href="files.html"><span>FL</span><small>Files</small></a>
+        <a class="desktop-icon" href="bucket.html"><span>BK</span><small>Bucket</small></a>
+        <a class="desktop-icon" href="setup.html"><span>SU</span><small>Setup</small></a>
+        <a class="desktop-icon" href="settings.html"><span>SE</span><small>Settings</small></a>
+        <a class="desktop-icon" href="notes.html"><span>NP</span><small>Notepad</small></a>
+      </nav>
+      <section class="window">
+        <div class="window-title"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><strong>Welcome Center</strong></div>
+        <div class="window-body">
+          <div class="hero">
+            <div>
+              <h1 class="title">Create. Run. Publish.</h1>
+              <p class="subtitle">RohanOS is now a desktop-style web operating system with a full browser notepad, HTML app studio, 1000-option settings center, and a local app-store publishing server.</p>
+              <div class="tile-grid">
+                <a class="tile" href="studio.html"><span class="app-mark">ST</span><strong>HTML Studio</strong><span class="muted">Create browser-only HTML apps, preview them, download files, and publish.</span></a>
+                <a class="tile" href="appstore.html"><span class="app-mark">AS</span><strong>Install Apps</strong><span class="muted">Install ready made apps or browse apps published through the local server.</span></a>
+                <a class="tile" href="settings.html"><span class="app-mark">SE</span><strong>1000 Settings</strong><span class="muted">A huge desktop setup and customization center.</span></a>
+                <a class="tile" href="notes.html"><span class="app-mark">NP</span><strong>Notepad</strong><span class="muted">Write, save, and export documents locally.</span></a>
+                <a class="tile" href="files.html"><span class="app-mark">FL</span><strong>Files</strong><span class="muted">Upload HTML, images, PDF, and text files to open or edit.</span></a>
+                <a class="tile" href="bucket.html"><span class="app-mark">BK</span><strong>App Bucket</strong><span class="muted">All apps and installed apps in one launcher.</span></a>
+                <a class="tile" href="setup.html"><span class="app-mark">SU</span><strong>Setup Wizard</strong><span class="muted">Personalize wallpaper, color, density, and dock.</span></a>
+              </div>
+            </div>
+            <aside class="panel">
+              <h2>System status</h2>
+              <p class="muted">Local-first desktop environment</p>
+              <div class="list">
+                <div class="item">Server: <strong>optional Node publisher</strong></div>
+                <div class="item">Storage: <strong>browser localStorage</strong></div>
+                <div class="item">Apps: <strong>HTML-only studio output</strong></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+      <aside class="sidebar">
+        <div class="panel"><h3 data-clock></h3><p class="muted" data-date></p></div>
+        <div class="panel"><h3>Quick setup</h3><p class="muted">Run <code>npm start</code> to enable publishing.</p></div>
+      </aside>
+    </section>
+    <nav class="taskbar"><a href="index.html">Home</a><a href="bucket.html">Bucket</a><a href="studio.html">Studio</a><a href="appstore.html">Store</a><a href="files.html">Files</a><a href="settings.html">Settings</a><a href="notes.html">Notepad</a></nav>
+  </main>
+  <section id="setupWizard" class="setup-overlay"><div class="setup-card panel"><h2>Welcome to RohanOS setup</h2><p class="muted">Use the supplied swirl artwork as your wallpaper, pick colors, and finish setup.</p><div class="card-grid"><label>Owner<input id="owner" class="input"></label><label>Wallpaper<select id="wallpaper"><option value="swirl">Color Swirl Image</option><option value="aurora">Aurora</option><option value="midnight">Midnight</option></select></label><label>Accent<input id="accent" class="input" type="color"></label><label>Density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="large">Large</option></select></label></div><p class="row"><button class="button" onclick="completeSetupWizard()">Finish setup</button><a class="button secondary" href="setup.html">Full setup</a></p></div></section>
+  <script src="app.js"></script>
+</body>
+</html>

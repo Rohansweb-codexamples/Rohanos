@@ -1,0 +1,12 @@
+{
+  "name": "rohanos",
+  "version": "2.0.0",
+  "description": "Desktop-style browser OS with an HTML studio and local app store publishing server.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "keywords": ["desktop", "html", "app-store", "rohanos"],
+  "license": "MIT"
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>App Store · RohanOS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="app-layout">
+      <div class="topbar"><a class="back" href="index.html">← Desktop</a><h1>RohanOS App Store</h1></div>
+      <section class="panel"><h2>Ready Made Apps</h2><p class="muted">Install apps into this browser. Installed apps open in RohanOS windows with red, green, and orange controls.</p></section>
+      <section id="readyApps" class="card-grid"></section>
+      <section class="panel"><h2>Installed Apps</h2><p class="muted">Installed apps are saved with localStorage and run as HTML-only apps.</p></section>
+      <section id="installedApps" class="card-grid"></section>
+      <section class="panel store-desktop"><h2>App Window</h2><div id="storeDesktop"><p class="muted">Select an installed app to open it in a RohanOS window.</p></div></section>
+      <section class="panel"><h2>Published HTML apps</h2><p class="muted">Start the server with <code>npm start</code>, then publish apps from HTML Studio to list them here.</p></section>
+      <section id="storeList" class="card-grid"></section>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

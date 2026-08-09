@@ -1,1 +1,34 @@
-<html><body><h1>Settings</h1><p>Theme, wallpaper and OS info.</p><a href='index.html'>Home</a></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Settings · RohanOS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="app-layout">
+      <div class="topbar"><a class="back" href="index.html">← Desktop</a><h1>Settings</h1></div>
+      <section class="settings-shell">
+        <nav class="settings-nav panel" aria-label="Settings categories">
+          <button class="active" data-page="appearance" onclick="showSettingsPage('appearance')">Appearance</button>
+          <button data-page="desktop" onclick="showSettingsPage('desktop')">Desktop</button>
+          <button data-page="security" onclick="showSettingsPage('security')">Security</button>
+          <button data-page="accessibility" onclick="showSettingsPage('accessibility')">Accessibility</button>
+          <button data-page="advanced" onclick="showSettingsPage('advanced')">Advanced</button>
+        </nav>
+        <section class="panel">
+          <div id="settings-appearance" class="settings-page active"><h2>Appearance</h2><div class="card-grid"><label>Wallpaper<select id="wallpaper"><option value="swirl">Color Swirl Image</option><option value="aurora">Aurora</option><option value="midnight">Midnight</option></select></label><label>Theme<select id="theme"><option>Nebula Desktop</option><option>Swirl Studio</option><option>Midnight Pro</option></select></label><label>Primary accent<input id="accent" class="input" type="color"></label><label>Secondary accent<input id="accent2" class="input" type="color"></label><label>Font<select id="font"><option value="system">System</option><option value="rounded">Rounded</option><option value="serif">Serif</option><option value="mono">Mono</option></select></label></div></div>
+          <div id="settings-desktop" class="settings-page"><h2>Desktop</h2><div class="card-grid"><label>Owner name<input id="owner" class="input"></label><label>Layout density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="large">Large</option></select></label><label>Dock alignment<select id="dock"><option value="center">Center</option><option value="start">Left</option><option value="end">Right</option></select></label></div></div>
+          <div id="settings-security" class="settings-page"><h2>Security</h2><div class="card-grid"><label>Local password label<input id="password" class="input" type="password" placeholder="Optional"></label><div class="item"><strong>Privacy mode</strong><p class="muted">RohanOS stores settings only in this browser with localStorage.</p></div></div></div>
+          <div id="settings-accessibility" class="settings-page"><h2>Accessibility</h2><p class="row"><label><input id="highContrast" type="checkbox"> High contrast mode</label><label><input id="reduceMotion" type="checkbox"> Reduce motion</label></p></div>
+          <div id="settings-advanced" class="settings-page"><h2>Advanced customisation</h2><p class="muted">The generated controls below keep the 1000-settings experience while the main Linux-style categories above apply real settings.</p><div id="settingsGrid" class="setting-grid"></div></div>
+          <p class="row"><button class="button" onclick="saveFullSettings()">Apply settings</button><a class="button secondary" href="setup.html">Run setup wizard</a><button class="button secondary" onclick="resetSetup()">Reset first-use setup</button></p>
+        </section>
+      </section>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
