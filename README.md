@@ -4,7 +4,9 @@ RohanOS is a desktop-style browser operating system prototype built with plain H
 
 ## Features
 
-- Desktop workspace with menu bar, window chrome, taskbar, widgets, and launch icons
+- Desktop workspace with menu bar, window chrome, taskbar, widgets, launch icons, and a supplied colorful swirl image wallpaper
+- Setup wizard for first-run personalization and a Settings app that applies owner, wallpaper, accent, density, and dock choices
+- App Bucket that collects every system app plus installed apps in one launcher
 - First-run setup plus a generated 1000-setting control center
 - Whole Notepad app with local saves and `.txt` export
 - HTML Studio for creating browser-only HTML files, live previewing them, downloading them, and publishing them

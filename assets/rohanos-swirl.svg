@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="glow" cx="52%" cy="45%" r="65%"><stop offset="0" stop-color="#ffd166"/><stop offset=".24" stop-color="#ff7a00"/><stop offset=".45" stop-color="#ef2d8f"/><stop offset=".72" stop-color="#005bd4"/><stop offset="1" stop-color="#04111f"/></radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="1.2"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <g fill="none" stroke-linecap="round" filter="url(#blur)">
+    <path d="M58 780C290 594 462 759 545 555c61-150-118-201-201-98-78 96 18 246 171 188 247-94 268-388 111-533" stroke="#11d3ff" stroke-width="54" opacity=".72"/>
+    <path d="M6 502C199 561 262 343 440 318c200-28 372 148 298 322-61 144-282 197-396 67" stroke="#ffea00" stroke-width="78" opacity=".72"/>
+    <path d="M148 78c156 225 332 127 473 261 167 158 73 398-133 421-166 19-310-86-332-238" stroke="#ff2b81" stroke-width="48" opacity=".82"/>
+    <path d="M996 211C801 234 790 462 659 578c-169 149-441 67-450-140" stroke="#1126aa" stroke-width="66" opacity=".72"/>
+    <path d="M140 946c67-220 305-153 500-256 191-101 245-348 80-517" stroke="#00f5a0" stroke-width="36" opacity=".55"/>
+    <path d="M23 248c259 82 315-92 492-79 218 16 406 225 339 455" stroke="#ffffff" stroke-width="18" opacity=".36"/>
+    <path d="M876 965c-83-236-4-375-112-507-112-137-314-143-407-15-80 111-8 263 131 267" stroke="#1ac8ff" stroke-width="44" opacity=".58"/>
+  </g>
+</svg>

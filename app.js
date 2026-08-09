@@ -261,3 +261,104 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAppStore();
   renderInstalledApps();
 });
+
+const defaultProfile = {
+  owner: 'Rohan',
+  theme: 'Nebula Desktop',
+  accent: '#ff8a00',
+  accent2: '#00c8ff',
+  wallpaper: 'swirl',
+  density: 'comfortable',
+  dock: 'center',
+  setupComplete: false
+};
+
+function profile() {
+  return { ...defaultProfile, ...store.get('profile', {}) };
+}
+
+function applySettings() {
+  const current = profile();
+  document.documentElement.style.setProperty('--accent', current.accent);
+  document.documentElement.style.setProperty('--accent-2', current.accent2);
+  document.body.dataset.wallpaper = current.wallpaper;
+  document.body.dataset.density = current.density;
+  const taskbar = $('.taskbar');
+  if (taskbar) taskbar.style.justifyContent = current.dock;
+  $$('[data-owner]').forEach((node) => { node.textContent = current.owner; });
+}
+
+function saveFullSettings() {
+  const current = profile();
+  const next = {
+    ...current,
+    owner: $('#owner')?.value || current.owner,
+    theme: $('#theme')?.value || current.theme,
+    accent: $('#accent')?.value || current.accent,
+    accent2: $('#accent2')?.value || current.accent2,
+    wallpaper: $('#wallpaper')?.value || current.wallpaper,
+    density: $('#density')?.value || current.density,
+    dock: $('#dock')?.value || current.dock,
+    setupComplete: true
+  };
+  store.set('profile', next);
+  applySettings();
+  alert('RohanOS settings applied.');
+}
+
+function hydrateSettingsForm() {
+  const current = profile();
+  if ($('#owner')) $('#owner').value = current.owner;
+  if ($('#theme')) $('#theme').value = current.theme;
+  if ($('#accent')) $('#accent').value = current.accent;
+  if ($('#accent2')) $('#accent2').value = current.accent2;
+  if ($('#wallpaper')) $('#wallpaper').value = current.wallpaper;
+  if ($('#density')) $('#density').value = current.density;
+  if ($('#dock')) $('#dock').value = current.dock;
+}
+
+function openSetupWizard(force = false) {
+  const overlay = $('#setupWizard');
+  if (!overlay) return;
+  if (force || !profile().setupComplete) overlay.classList.add('show');
+}
+
+function completeSetupWizard() {
+  saveFullSettings();
+  $('#setupWizard')?.classList.remove('show');
+}
+
+function renderAppBucket() {
+  const target = $('#appBucket');
+  if (!target) return;
+  const systemApps = [
+    ['🧰', 'HTML Studio', 'studio.html', 'Build and publish browser apps'],
+    ['🛒', 'App Store', 'appstore.html', 'Install ready made apps'],
+    ['📁', 'Files', 'files.html', 'Open HTML, images, PDFs, and text'],
+    ['⚙️', 'Settings', 'settings.html', 'Customize the desktop'],
+    ['📝', 'Notepad', 'notes.html', 'Write and export notes'],
+    ['🧮', 'Calculator', 'calculator.html', 'Calculate quickly'],
+    ['🌐', 'Browser', 'browser.html', 'Search the web'],
+    ['🎧', 'Music', 'music.html', 'Play focus tracks'],
+    ['🖼️', 'Gallery', 'gallery.html', 'Browse visuals'],
+    ['📅', 'Calendar', 'calendar.html', 'See your day']
+  ];
+  const installed = installedApps().map((app) => [app.icon, app.name, 'appstore.html', app.description]);
+  target.innerHTML = [...systemApps, ...installed].map(([icon, name, href, desc]) => `<a class="app-card" href="${href}"><span class="emoji">${icon}</span><strong>${name}</strong><span class="muted">${desc}</span></a>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applySettings();
+  hydrateSettingsForm();
+  renderAppBucket();
+  openSetupWizard(false);
+});
+
+function saveSetting() {
+  saveFullSettings();
+}
+
+function loadSettings() {
+  hydrateSettingsForm();
+  applySettings();
+}

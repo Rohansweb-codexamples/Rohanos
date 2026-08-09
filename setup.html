@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Settings · RohanOS</title>
+  <title>Setup Wizard · RohanOS</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="app-shell">
     <section class="app-layout">
-      <div class="topbar"><a class="back" href="index.html">← Desktop</a><h1>Settings</h1></div>
+      <div class="topbar"><a class="back" href="index.html">← Desktop</a><h1>Setup Wizard</h1></div>
       <section class="panel">
-        <h2>Working desktop settings</h2>
-        <p class="muted">Change these controls and press Apply. The desktop updates and remembers your choices in this browser.</p>
+        <h2>Make RohanOS yours</h2>
+        <p class="muted">Choose the background, color, spacing, dock layout, and owner profile. These settings apply instantly and persist in this browser.</p>
         <div class="card-grid">
           <label>Owner name<input id="owner" class="input"></label>
           <label>Theme<select id="theme"><option>Nebula Desktop</option><option>Swirl Studio</option><option>Midnight Pro</option></select></label>
@@ -22,9 +22,8 @@
           <label>Layout density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="large">Large</option></select></label>
           <label>Dock alignment<select id="dock"><option value="center">Center</option><option value="start">Left</option><option value="end">Right</option></select></label>
         </div>
-        <p class="row"><button class="button" onclick="saveFullSettings()">Apply settings</button><a class="button secondary" href="setup.html">Open setup wizard</a></p>
+        <p class="row"><button class="button" onclick="completeSetupWizard()">Finish setup</button><button class="button secondary" onclick="saveFullSettings()">Apply without closing</button></p>
       </section>
-      <section class="panel"><h2>1000 settings app</h2><p class="muted">Generated desktop controls for appearance, security, developer tools, app-store publishing, accessibility, power, and workspace behavior.</p><div id="settingsGrid" class="setting-grid"></div></section>
     </section>
   </main>
   <script src="app.js"></script>

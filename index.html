@@ -14,6 +14,8 @@
         <a class="desktop-icon" href="studio.html"><span>🧰</span><small>Studio</small></a>
         <a class="desktop-icon" href="appstore.html"><span>🛒</span><small>Store</small></a>
         <a class="desktop-icon" href="files.html"><span>📁</span><small>Files</small></a>
+        <a class="desktop-icon" href="bucket.html"><span>🪣</span><small>Bucket</small></a>
+        <a class="desktop-icon" href="setup.html"><span>🚀</span><small>Setup</small></a>
         <a class="desktop-icon" href="settings.html"><span>⚙️</span><small>Settings</small></a>
         <a class="desktop-icon" href="notes.html"><span>📝</span><small>Notepad</small></a>
       </nav>
@@ -30,6 +32,8 @@
                 <a class="tile" href="settings.html"><span class="emoji">⚙️</span><strong>1000 Settings</strong><span class="muted">A huge desktop setup and customization center.</span></a>
                 <a class="tile" href="notes.html"><span class="emoji">📝</span><strong>Notepad</strong><span class="muted">Write, save, and export documents locally.</span></a>
                 <a class="tile" href="files.html"><span class="emoji">📁</span><strong>Files</strong><span class="muted">Upload HTML, images, PDF, and text files to open or edit.</span></a>
+                <a class="tile" href="bucket.html"><span class="emoji">🪣</span><strong>App Bucket</strong><span class="muted">All apps and installed apps in one launcher.</span></a>
+                <a class="tile" href="setup.html"><span class="emoji">🚀</span><strong>Setup Wizard</strong><span class="muted">Personalize wallpaper, color, density, and dock.</span></a>
               </div>
             </div>
             <aside class="panel">
@@ -49,8 +53,9 @@
         <div class="panel"><h3>Quick setup</h3><p class="muted">Run <code>npm start</code> to enable publishing.</p></div>
       </aside>
     </section>
-    <nav class="taskbar"><a href="index.html">Home</a><a href="studio.html">Studio</a><a href="appstore.html">Store</a><a href="files.html">Files</a><a href="settings.html">Settings</a><a href="notes.html">Notepad</a></nav>
+    <nav class="taskbar"><a href="index.html">Home</a><a href="bucket.html">Bucket</a><a href="studio.html">Studio</a><a href="appstore.html">Store</a><a href="files.html">Files</a><a href="settings.html">Settings</a><a href="notes.html">Notepad</a></nav>
   </main>
+  <section id="setupWizard" class="setup-overlay"><div class="setup-card panel"><h2>Welcome to RohanOS setup</h2><p class="muted">Use the supplied swirl artwork as your wallpaper, pick colors, and finish setup.</p><div class="card-grid"><label>Owner<input id="owner" class="input"></label><label>Wallpaper<select id="wallpaper"><option value="swirl">Color Swirl Image</option><option value="aurora">Aurora</option><option value="midnight">Midnight</option></select></label><label>Accent<input id="accent" class="input" type="color"></label><label>Density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="large">Large</option></select></label></div><p class="row"><button class="button" onclick="completeSetupWizard()">Finish setup</button><a class="button secondary" href="setup.html">Full setup</a></p></div></section>
   <script src="app.js"></script>
 </body>
 </html>
