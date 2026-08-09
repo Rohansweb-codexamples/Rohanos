@@ -177,3 +177,87 @@ function loadSettings() {
 }
 
 document.addEventListener('DOMContentLoaded', initShell);
+
+const readyMadeApps = [
+  { id: 'paint-lite', name: 'Paint Lite', icon: '🎨', description: 'Sketch colorful ideas on a simple canvas.', html: '<!doctype html><html><body style="font-family:system-ui;background:#111;color:white"><h1>Paint Lite</h1><canvas width="420" height="260" style="background:white;border-radius:16px"></canvas><script>const c=document.querySelector("canvas"),x=c.getContext("2d");let d=false;c.onpointerdown=e=>{d=true;x.moveTo(e.offsetX,e.offsetY)};c.onpointerup=()=>d=false;c.onpointermove=e=>{if(d){x.lineTo(e.offsetX,e.offsetY);x.stroke()}}<\/script></body></html>' },
+  { id: 'tasks-pro', name: 'Tasks Pro', icon: '✅', description: 'A tiny checklist for daily focus.', html: '<!doctype html><html><body style="font-family:system-ui;padding:24px"><h1>Tasks Pro</h1><input id="i"><button onclick="l.innerHTML+=`<li>${i.value}</li>`;i.value=``">Add</button><ul id="l"></ul></body></html>' },
+  { id: 'weather-card', name: 'Weather Card', icon: '☀️', description: 'A beautiful offline weather mockup.', html: '<!doctype html><html><body style="font-family:system-ui;background:linear-gradient(135deg,#38bdf8,#6366f1);color:white;padding:32px"><h1>24° Sunny</h1><p>Perfect day to build with RohanOS.</p></body></html>' },
+  { id: 'markdown-pad', name: 'Markdown Pad', icon: '📘', description: 'Write markdown-style notes in a clean editor.', html: '<!doctype html><html><body style="font-family:system-ui;margin:0;padding:24px"><h1>Markdown Pad</h1><textarea style="width:100%;height:280px"># Hello RohanOS</textarea></body></html>' }
+];
+
+function installedApps() {
+  return store.get('installedApps', []);
+}
+
+function installApp(id) {
+  const app = readyMadeApps.find((item) => item.id === id);
+  if (!app) return;
+  const installed = installedApps().filter((item) => item.id !== id);
+  store.set('installedApps', [app, ...installed]);
+  renderAppStore();
+  renderInstalledApps();
+  alert(`${app.name} installed.`);
+}
+
+function uninstallApp(id) {
+  store.set('installedApps', installedApps().filter((item) => item.id !== id));
+  renderAppStore();
+  renderInstalledApps();
+}
+
+function openInstalledApp(id) {
+  const app = installedApps().find((item) => item.id === id);
+  if (!app) return;
+  const viewer = $('#installedPreview');
+  if (viewer) viewer.srcdoc = app.html;
+}
+
+function renderAppStore() {
+  const target = $('#readyApps');
+  if (!target) return;
+  const installed = new Set(installedApps().map((app) => app.id));
+  target.innerHTML = readyMadeApps.map((app) => `<article class="app-card"><h3>${app.icon} ${app.name}</h3><p class="muted">${app.description}</p><button class="button" onclick="installApp('${app.id}')">${installed.has(app.id) ? 'Reinstall' : 'Install'}</button></article>`).join('');
+}
+
+function renderInstalledApps() {
+  const target = $('#installedApps');
+  if (!target) return;
+  const apps = installedApps();
+  target.innerHTML = apps.map((app) => `<article class="app-card"><h3>${app.icon} ${app.name}</h3><p class="muted">${app.description}</p><p class="row"><button class="button" onclick="openInstalledApp('${app.id}')">Open</button><button class="button secondary" onclick="uninstallApp('${app.id}')">Remove</button></p></article>`).join('') || '<p class="muted">No apps installed yet. Install one from the Ready Made Apps section.</p>';
+}
+
+const fileReaders = {
+  image(file, dataUrl) {
+    return `<img src="${dataUrl}" alt="${file.name}" style="max-width:100%;border-radius:18px">`;
+  },
+  html(file, text) {
+    return `<iframe class="preview" title="${file.name}" srcdoc="${text.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}"></iframe>`;
+  },
+  text(file, text) {
+    return `<textarea id="textEditor" spellcheck="false">${text.replaceAll('&', '&amp;').replaceAll('<', '&lt;')}</textarea><p class="row"><button class="button" onclick="downloadBlob(new Blob([textEditor.value],{type:'text/plain'}),'${file.name}')">Save text file</button></p>`;
+  },
+  pdf(file, dataUrl) {
+    return `<iframe class="preview" title="${file.name}" src="${dataUrl}"></iframe><div class="item"><strong>PDF editor tools</strong><p class="muted">Browser-native PDF editing is limited, so RohanOS adds editable annotation notes you can export beside the PDF.</p><textarea id="pdfNotes" placeholder="Add PDF notes, corrections, signatures, or revision comments..."></textarea><p><button class="button" onclick="downloadBlob(new Blob([pdfNotes.value],{type:'text/plain'}),'${file.name}.notes.txt')">Export PDF notes</button></p></div>`;
+  }
+};
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  const target = $('#fileViewer');
+  if (!file || !target) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const value = reader.result;
+    if (file.type.startsWith('image/')) target.innerHTML = fileReaders.image(file, value);
+    else if (file.type === 'application/pdf') target.innerHTML = fileReaders.pdf(file, value);
+    else if (file.type === 'text/html' || file.name.endsWith('.html')) target.innerHTML = fileReaders.html(file, String(value));
+    else target.innerHTML = fileReaders.text(file, String(value));
+  };
+  if (file.type.startsWith('image/') || file.type === 'application/pdf') reader.readAsDataURL(file);
+  else reader.readAsText(file);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderAppStore();
+  renderInstalledApps();
+});

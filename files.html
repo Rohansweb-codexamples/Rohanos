@@ -1,1 +1,24 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Files · RohanOS</title><link rel="stylesheet" href="styles.css"></head><body><main class="phone"><div class="topbar"><a class="back" href="index.html">←</a><h1>Files</h1></div><section class="list"><div class="item">📁 Projects <span class="muted">12 items</span></div><div class="item">📁 Photos <span class="muted">48 items</span></div><div class="item">📄 welcome.txt <span class="muted">2 KB</span></div><div class="item">🎵 focus.mix <span class="muted">8 MB</span></div></section></main><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Files · RohanOS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="app-layout">
+      <div class="topbar"><a class="back" href="index.html">← Desktop</a><h1>Files</h1></div>
+      <section class="panel">
+        <h2>Upload and open files</h2>
+        <p class="muted">Open HTML files, view images, read or edit text, and add exportable notes to PDFs directly in the browser.</p>
+        <input class="input" type="file" onchange="handleFileUpload(event)" accept=".html,.htm,.txt,.md,.json,.css,.js,.pdf,image/*,text/*">
+      </section>
+      <section id="fileViewer" class="panel"><p class="muted">Choose a file to preview it here.</p></section>
+      <section class="list"><div class="item">📁 Projects <span class="muted">12 items</span></div><div class="item">📁 Photos <span class="muted">48 items</span></div><div class="item">📄 welcome.txt <span class="muted">2 KB</span></div><div class="item">🎵 focus.mix <span class="muted">8 MB</span></div></section>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -8,7 +8,9 @@ RohanOS is a desktop-style browser operating system prototype built with plain H
 - First-run setup plus a generated 1000-setting control center
 - Whole Notepad app with local saves and `.txt` export
 - HTML Studio for creating browser-only HTML files, live previewing them, downloading them, and publishing them
-- Browser-only App Store mode for GitHub Pages and local server-backed App Store mode for Node.js
+- App Store with ready made installable apps, installed app launching, and server/browser publishing modes
+- Files app that uploads and opens HTML, images, PDFs, and text files in the browser
+- Text editing/export and PDF annotation-note export from the Files app
 - Existing utility apps for calculator, browser launcher, music, gallery, calendar, and files
 
 ## Run the desktop locally
